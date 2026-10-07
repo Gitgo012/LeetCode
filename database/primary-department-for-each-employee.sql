@@ -1,9 +1,10 @@
 SELECT
-    employee_id,
-    CASE
-        WHEN SUM(primary_flag = 'Y') > 0
-            THEN MAX(CASE WHEN primary_flag = 'Y' THEN department_id END)
-        ELSE MIN(department_id)
-    END AS department_id
-FROM Employee
-GROUP BY employee_id;
+employee_id,department_id from employee
+where primary_flag='Y'
+
+union
+
+select 
+employee_id,min(department_id) from employee
+group by employee_id
+having count(*)=1;
